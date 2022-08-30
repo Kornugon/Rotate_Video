@@ -56,6 +56,7 @@ User will be asked to provide the name of the source folder.
 Next user has to provide information about rotation angle, for all the videos in the source folder.
 Rotated videos will be saved as new video in the output folder.
 Output folder "Result" will be created automatically (if it is not existing), in the same location as script.
+Available formats are (mp4, avi, ogv, webm).
 """
 
 
@@ -92,6 +93,18 @@ def rotate_vid(folder_name, value):
 
         # Split file name to name and file format.
         f_name, form = file.split('.')
+
+        # choose format of the file (codec) based of original file.
+        if form == ('mp444'):  # never executive - just a "reminder"/shortcut
+            codec = 'libx264'
+        elif form == ('mp4'):
+            codec = 'mpeg4'
+        elif form == ('avi'):
+            codec = 'png'
+        elif form == ('ogv'):
+            codec = 'libvorbis'
+        elif form == ('webm'):
+            codec = 'libvpx'
 
         # Load the file and assign original fps rate to variable.
         clip = VideoFileClip(folder_name + file)

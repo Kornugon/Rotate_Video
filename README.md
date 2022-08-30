@@ -5,3 +5,4 @@
 #### Next user has to provide information about rotation angle, for all the videos in the source folder.
 #### Rotated videos will be saved as new video in the output folder.
 #### Output folder "Result" will be created automatically (if it is not existing), in the same location as script.
+#### Available formats are (mp4, avi, ogv, webm).

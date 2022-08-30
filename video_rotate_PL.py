@@ -56,6 +56,7 @@ Użytkownik zostanie poproszony o podanie nazwy folderu źródłowego.
 Następnie, użytkownik musi podać informacje o kącie obrotu wszystkich filmów w folderze źródłowym.
 Obrócone filmy zostaną zapisane jako nowe wideo w folderze wyjściowym.
 Folder wyjściowy "Result" zostanie utworzony automatycznie (jeśli nie istnieje), w tej samej lokalizacji co skrypt.
+Dostępne formaty to (mp4, avi, ogv, webm).
 """
 
 
@@ -93,6 +94,18 @@ def rotate_vid(folder_name, value):
         # Split file name to name and file format.
         f_name, form = file.split('.')
 
+        # choose format of the file (codec) based of original file.
+        if form == ('mp444'):  # never executive - just a "reminder"/shortcut
+            codec = 'libx264'
+        elif form == ('mp4'):
+            codec = 'mpeg4'
+        elif form == ('avi'):
+            codec = 'png'
+        elif form == ('ogv'):
+            codec = 'libvorbis'
+        elif form == ('webm'):
+            codec = 'libvpx'
+
         # Load the file and assign original fps rate to variable.
         clip = VideoFileClip(folder_name + file)
         fps = clip.fps
@@ -127,7 +140,7 @@ def rotate_vid(folder_name, value):
             name = 'Result/' + str(i) + '_' + f_name + '_' + str(value) + 'deg.' + form
 
         # Write rotated file with new name and original fps and sound.
-        rotated_clip.write_videofile(name, fps=fps, audio=True, verbose=False)
+        rotated_clip.write_videofile(name, fps=fps, audio=True, verbose=False, codec=codec)
 
         # Increment loop variable.
         i += 1
