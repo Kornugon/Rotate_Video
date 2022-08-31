@@ -57,6 +57,9 @@ Następnie, użytkownik musi podać informacje o kącie obrotu wszystkich filmó
 Obrócone filmy zostaną zapisane jako nowe wideo w folderze wyjściowym.
 Folder wyjściowy "Result" zostanie utworzony automatycznie (jeśli nie istnieje), w tej samej lokalizacji co skrypt.
 Dostępne formaty to (mp4, avi, ogv, webm).
+„Obrót” o 0 stopni ma zasadniczo na celu nieznaczne obniżenie jakości filmu.
+Pamiętaj, że w folderze źródłowym powinny znajdować się tylko filmy do rotacji. Również nazwa wideo powinna być bez kropek.
+Skrypt może nie działać w systemie Windows 7 i starszych.
 """
 
 
@@ -74,9 +77,9 @@ def user_input_folder_name():
 
 def user_input_angle_value():
     # User input angle.
-    value = input("\nPodaj kąt rotacji.\nMożliwe opcje to: 90, 180, 270 oraz -90, -180, -270.\n")
+    value = input("\nPodaj kąt rotacji.\nMożliwe opcje to: 0, 90, 180, 270 oraz -90, -180, -270.\n")
 
-    if int(value) in (90, 180, 270, -90, -180, -270):
+    if int(value) in (0, 90, 180, 270, -90, -180, -270):
         print(f'Wprowadzono kąt {value} stopni.')
     else:
         value = input(f'Wprowadzono {value}.\nNiepoprawny kąt.\nSpróbuj ponownie: \n')
@@ -95,10 +98,8 @@ def rotate_vid(folder_name, value):
         f_name, form = file.split('.')
 
         # choose format of the file (codec) based of original file.
-        if form == ('mp444'):  # never executive - just a "reminder"/shortcut
+        if form == ('mp4'):
             codec = 'libx264'
-        elif form == ('mp4'):
-            codec = 'mpeg4'
         elif form == ('avi'):
             codec = 'png'
         elif form == ('ogv'):
@@ -129,6 +130,8 @@ def rotate_vid(folder_name, value):
             rotated_clip = clip.rotate(-180)
         elif value == -270:
             rotated_clip = clip.rotate(-270)
+        elif value == 0:
+            rotated_clip = clip.rotate(0)
         else:
             print('Ponownie, niepoprawny kąt.')
             break

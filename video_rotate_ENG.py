@@ -57,6 +57,9 @@ Next user has to provide information about rotation angle, for all the videos in
 Rotated videos will be saved as new video in the output folder.
 Output folder "Result" will be created automatically (if it is not existing), in the same location as script.
 Available formats are (mp4, avi, ogv, webm).
+"Rotation" by 0 degree is basically to slightly decrease quality of a video.
+Note that in the source folder should be only videos for rotation. Also video name should be without any dots.
+The script may not work on Windows 7 and older.
 """
 
 
@@ -74,9 +77,9 @@ def user_input_folder_name():
 
 def user_input_angle_value():
     # User input angle.
-    value = input("\nPlease enter a rotation angle.\nOptions are: 90, 180, 270 and -90, -180, -270.\n")
+    value = input("\nPlease enter a rotation angle.\nOptions are: 0, 90, 180, 270 and -90, -180, -270.\n")
 
-    if int(value) in (90, 180, 270, -90, -180, -270):
+    if int(value) in (0, 90, 180, 270, -90, -180, -270):
         print(f'You entered {value} deg angle.')
     else:
         value = input(f'You entered {value}.\nWrong angle.\nTry again: \n')
@@ -95,10 +98,8 @@ def rotate_vid(folder_name, value):
         f_name, form = file.split('.')
 
         # choose format of the file (codec) based of original file.
-        if form == ('mp444'):  # never executive - just a "reminder"/shortcut
+        if form == ('mp4'):
             codec = 'libx264'
-        elif form == ('mp4'):
-            codec = 'mpeg4'
         elif form == ('avi'):
             codec = 'png'
         elif form == ('ogv'):
@@ -129,6 +130,8 @@ def rotate_vid(folder_name, value):
             rotated_clip = clip.rotate(-180)
         elif value == -270:
             rotated_clip = clip.rotate(-270)
+        elif value == 0:
+            rotated_clip = clip.rotate(0)
         else:
             print('Wrong angle again.')
             break
