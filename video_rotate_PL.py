@@ -96,6 +96,7 @@ def rotate_vid(folder_name, value):
 
         # Split file name to name and file format.
         f_name, form = file.split('.')
+        form = form.lower()
 
         # choose format of the file (codec) based of original file.
         if form == ('mp4'):
@@ -137,10 +138,7 @@ def rotate_vid(folder_name, value):
             break
 
         # Format name for resulting file.
-        if i < 10:
-            name = 'Result/' + '0' + str(i) + '_' + f_name + '_' + str(value) + 'deg.' + form
-        else:
-            name = 'Result/' + str(i) + '_' + f_name + '_' + str(value) + 'deg.' + form
+        name = 'Result/' + f_name + '.' + form
 
         # Write rotated file with new name and original fps and sound.
         rotated_clip.write_videofile(name, fps=fps, audio=True, verbose=False, codec=codec)
